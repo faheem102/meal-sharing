@@ -12,14 +12,14 @@ router.get("/", async (request, response) => {
   router.post("/", async (request, response) => {
     try {
       const newReservation = await knex("reservation").insert({
-          'number_of_guests' : '5',
-          'meal_id' : '7',
-          'created_date' : '2022-03-15',
-          'contact_name' : 'Brian Lara',
-          'contact_phonenumber' : '78643909',
-          'contact_email' : 'Blara@hotmail.com'
+          'number_of_guests' : request.body.number_of_guests,
+          'meal_id' : request.body.meal_id,
+          'created_date' : request.body.created_date,
+          'contact_name' : request.body.contact_name,
+          'contact_phonenumber' : request.body.contact_phonenumber,
+          'contact_email' : request.body.contact_email
       });
-      response.json(newReservation);
+      response.json("new reservation has been added");
     } catch (error) {
       throw error;
     }
@@ -35,7 +35,7 @@ router.get("/", async (request, response) => {
   router.put("/:id", async (request, response) => {
     try {
       const updateReservation = await knex("reservation").where({id:request.params.id}).update(request.body);
-      response.json(updateReservation);
+      response.json("reservation has been updated");
     } catch (error) {
       throw error;
     }
@@ -43,20 +43,12 @@ router.get("/", async (request, response) => {
   router.delete("/:id", async (request, response) => {
     try {
       const deleteReservation = await knex("reservation").where('id',request.params.id).del();
-      response.json(deleteReservation);
+      response.json("reservation has been deleted");
     } catch (error) {
       throw error;
     }
   });
-  router.get("/", async (request, response) => {
-    try {
-      const allReservations1 = await knex("reservation").select("title").where('id',request.query.id);
-      console.log(request.query.id)
-      response.json(allReservations1);
-    } catch (error) {
-      throw error;
-    }
-});
+  
   
 
 module.exports = router;

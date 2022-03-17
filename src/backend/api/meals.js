@@ -45,15 +45,15 @@ router.post("/", async (request, response) => {
   try {
     // knex syntax for selecting things. Look up the documentation for knex for further info
     const newMeal = await knex("meal").insert({
-      'title':'Chilli cheese lamb',
-      'description': 'Tender lamb made with herbs chilli and cheese extra hot',
-      'location': 'Glostrup',
-      'when_event': '2022-04-04',
-      'max_reservations': '3',
-      'price': 199,
-      'created_date' : '2022-02-15'
+      'title':request.body.title,
+      'description': request.body.description,
+      'location': request.body.location,
+      'when_event': request.body.when_event,
+      'max_reservations': request.body.max_reservations,
+      'price': request.body.price,
+      'created_date' : request.body.created_date
     });
-    response.json(newMeal);
+    response.json("meal has been added");
   } catch (error) {
     throw error;
   }
@@ -71,7 +71,7 @@ router.put("/:id", async (request, response) => {
   try {
     // knex syntax for selecting things. Look up the documentation for knex for further info
     const updateMeal = await knex("meal").where({id:request.params.id}).update(request.body);
-    response.json(updateMeal);
+    response.json("meal has been updated");
   } catch (error) {
     throw error;
   }
@@ -80,7 +80,7 @@ router.delete("/:id", async (request, response) => {
   try {
     // knex syntax for selecting things. Look up the documentation for knex for further info
     const deleteMeal = await knex("meal").where('id',request.params.id).del();
-    response.json(deleteMeal);
+    response.json("meal has been deleted");
   } catch (error) {
     throw error;
   }

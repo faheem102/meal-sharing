@@ -13,13 +13,13 @@ router.get("/", async (request, response) => {
   router.post("/", async (request, response) => {
     try {
       const newReview = await knex("review").insert({
-          'title' : 'Delicious treat',
-          'description' : 'Delicious taste of indian food away from home',
-          'stars' :'5',
-          'created_date' : '2022-02-09',
-          'meal_id' : '5'
+          'title' : request.body.title,
+          'description' : request.body.description,
+          'stars' : request.body.stars,
+          'created_date' : request.body.created_date,
+          'meal_id' : request.body.meal_id
       });
-      response.json(newReview);
+      response.json("new review has been added");
     } catch (error) {
       throw error;
     }
@@ -35,7 +35,7 @@ router.get("/", async (request, response) => {
   router.put("/:id", async (request, response) => {
     try {
       const updateReview = await knex("review").where({id:request.params.id}).update(request.body);
-      response.json(updateReview);
+      response.json("this review has been updated");
     } catch (error) {
       throw error;
     }
@@ -43,7 +43,7 @@ router.get("/", async (request, response) => {
   router.delete("/:id", async (request, response) => {
     try {
       const deleteReview = await knex("review").where('id',request.params.id).del();
-      response.json(deleteReview);
+      response.json("review has been deleted");
     } catch (error) {
       throw error;
     }
