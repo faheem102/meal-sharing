@@ -75,9 +75,8 @@ router.post("/", async (request, response) => {
       price: request.body.price,
       created_date: request.body.created_date,
     });
-    response.json("meal has been added");
+    response.send("meal has been added");
   } catch (error) {
-    console.log("Hit me error");
     throw error;
   }
 });
