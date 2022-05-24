@@ -19,7 +19,7 @@ export function MakeReservation(props) {
     };
 
     fetch("http://localhost:3000/api/reservations", {
-      method: "POST", // or 'PUT'
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -36,16 +36,7 @@ export function MakeReservation(props) {
     <div className="form-section">
       <h1 className="form-heading">Add a Reservation for a Meals</h1>
       <form>
-        {/* <div>
-          <label>Meal_id</label>
-        </div>
-        <div>
-          <input
-            type="number"
-            placeholder="Meal Id..."
-            onChange={(e) => setMealId(e.target.value)}
-          ></input>
-        </div> */}
+        
         <div>
           <label className="flex-column">Name</label>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
-import "./form.css";
 import { useState } from "react";
+import "./form.css";
 
 export function AddMeal() {
   const [mealTitle, setMealTitle] = useState("");
@@ -32,6 +32,7 @@ export function AddMeal() {
         console.log("Success:", data);
       })
       .catch((error) => {
+        alert("An error occured")
         console.error("Error:", error);
       });
   }
@@ -59,7 +60,6 @@ export function AddMeal() {
             name="title"
             rows="3"
             cols="50"
-            name="description"
             onChange={(e) => setMealDescription(e.target.value)}
             placeholder="Add meal description"
           ></textarea>

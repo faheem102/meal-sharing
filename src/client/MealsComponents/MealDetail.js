@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MakeReservation } from "../ReservationComponents/Reservation";
 
-function MealsListDetails({ fetchMeal }) {
-  if (fetchMeal) {
-    const detailsOfMeals = fetchMeal.map((meal) => (
+function MealsListDetails({ meals }) {
+  if (!meals || meals.length === 0) {
+    return null;
+  } else {
+    const detailsOfMeals = meals.map((meal) => (
       <li key={meal.id} className="mealdetailsSection">
         <Link to={`/meals/${meal.id}`}>
           <h3>{meal.title}</h3>
@@ -24,31 +26,42 @@ function MealsListDetails({ fetchMeal }) {
         </p>
       </li>
     ));
-    console.log(fetchMeal);
+    console.log(meals);
 
     return <ul className="mealList">{detailsOfMeals}</ul>;
   }
 }
 
 export function MealsListInformation({ match }) {
-  const [fetchMeal, setFetchMeal] = useState([]);
+  const [meals, setMeals] = useState([]);
   useEffect(() => {
+    const fetchMealResult = async () => {
+      const response = await fetch(
+        `http://localhost:3000/api/meals/${match.params.id}`
+      );
+      const Data = await response.json();
+      setMeals(Data);
+    };
+
     fetchMealResult();
-    console.log(match);
   }, []);
-  const fetchMealResult = async () => {
-    const response = await fetch(
-      `http://localhost:3000/api/meals/${match.params.id}`
-    );
-    const Data = await response.json();
-    setFetchMeal(Data);
-  };
+  // useEffect(() => {
+  //   fetchMealResult();
+  //   console.log(match);
+  // }, []);
+  // const fetchMealResult = async () => {
+  //   const response = await fetch(
+  //     `http://localhost:3000/api/meals/${match.params.id}`
+  //   );
+  //   const Data = await response.json();
+  //   setMeals(Data);
+  // };
 
   return (
     <div className="meals-component">
       <h1 className="menu-heading">Meal Details</h1>
       <div className="meals">
-        <MealsListDetails fetchMeal={fetchMeal} />
+        <MealsListDetails meals={meals} />
       </div>
       <div>
         <MakeReservation mealId={match.params.id} />

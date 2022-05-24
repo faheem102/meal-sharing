@@ -18,7 +18,6 @@ export function AboutUs() {
           lectus at dui.
         </p>
       </div>
-      <div className="empty-div"></div>
     </>
   );
 }
